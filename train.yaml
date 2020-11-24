@@ -1,0 +1,46 @@
+# minibatch related
+batch-size: 4
+maxlen-in: 800
+maxlen-out: 150
+
+# optimization related
+criterion: loss
+early-stop-criterion: "validation/main/loss"
+sortagrad: 0
+opt: noam
+epochs: 20
+patience: 0
+accum-grad: 4
+grad-clip: 5.0
+
+# transformer related
+transformer-lr: 1.0
+transformer-warmup-steps: 4000
+transformer-attn-dropout-rate-encoder: 0.1
+transformer-attn-dropout-rate-decoder: 0.1
+
+# network architecture
+## encoder related
+etype: transformer
+transformer-input-layer: "channel-transformer"
+elayers: 5
+eunits: 512 # FFd network linear units
+dropout-rate: 0.1
+
+## decoder related
+dtype: transformer
+dlayers: 2
+dec-embed-dim: 256
+dunits: 512 # FFd network linear units
+dropout-rate-decoder: 0.1
+
+## attention related
+adim: 256
+aheads: 8
+## joint network related
+joint-dim: 256
+
+# transducer related
+mtlalpha: 1.0 # mtlalpha should be set to 1.0 (CTC) to use transducer
+rnnt-mode: 'rnnt' # switch to 'rnnt-att' to use transducer with attention
+model-module: "espnet.nets.pytorch_backend.e2e_asr_transducer:E2E"
